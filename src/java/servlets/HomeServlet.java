@@ -21,7 +21,6 @@ public class HomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setAttribute("logout", "h");
         String logout = request.getParameter("logout");
         
         if (logout != null) {

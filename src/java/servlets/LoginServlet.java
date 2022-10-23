@@ -27,10 +27,9 @@ public class LoginServlet extends HttpServlet {
         //String login = request.getParameter("login");
         String logout = (String) request.getParameter("logout");
 
-        if (logout == null) {
-            session.setAttribute("message", "The user has successfully logged out");
+        if (logout != null) {
             session.invalidate();
-            session = request.getSession();
+            request.setAttribute("message", "The user has successfully logged out");
             getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
         } else {
             getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
@@ -45,23 +44,25 @@ public class LoginServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        session.setAttribute("password", password);
         AccountService account = new AccountService();
-        User user = null;
 
         if (username == null || username.equals("") || password == null || password.equals("")) {
             request.setAttribute("message", "Pleaase enter the username and password");
             getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
-            return;
 
         }   
-        else {
-            user = account.login(username, password);
-            if (user != null) {
-               session.setAttribute("username", username);
+        else if (account.login(username, password) != null) {             
+                session.setAttribute("username", username);
+               response.sendRedirect("home");
 
-            }
+            
                 
+        }
+        else {
+           request.setAttribute("message", "invalid username or password");
+           getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
+
+           
         }
                 
         
