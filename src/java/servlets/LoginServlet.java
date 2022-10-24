@@ -32,7 +32,7 @@ public class LoginServlet extends HttpServlet {
             request.setAttribute("message", "The user has successfully logged out");
             getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
         } else {
-            getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/WEB-INF/home.jsp").forward(request, response);
 
         }
 
@@ -44,6 +44,7 @@ public class LoginServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        session.setAttribute("password", password);
         AccountService account = new AccountService();
 
         if (username == null || username.equals("") || password == null || password.equals("")) {
