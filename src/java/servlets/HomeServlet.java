@@ -19,29 +19,26 @@ import models.*;
  * @author muham
  */
 public class HomeServlet extends HttpServlet {
-   
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         String username = (String) session.getAttribute("username");
 
-        if (username == null) {
-            getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
- 
+        if (username != null) {
+            getServletContext().getRequestDispatcher("/WEB-INF/home.jsp").forward(request, response);
+
         } else {
-          getServletContext().getRequestDispatcher("/WEB-INF/home.jsp").forward(request, response);
- 
+            getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
+
         }
-        
+
     }
 
-  
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     }
-
-   
 
 }
